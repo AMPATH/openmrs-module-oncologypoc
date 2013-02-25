@@ -1,0 +1,10 @@
+syntax: regexp
+^\.settings$
+syntax: regexp
+^omod/\.settings$
+syntax: regexp
+^api/\.settings$
+syntax: regexp
+^api/target$
+syntax: regexp
+^omod/target$
