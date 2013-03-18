@@ -167,7 +167,7 @@
                                 </goals>
                                 <configuration>
                                     <tasks>
-                                        <copy todir="/home/thaiya/tomcat6/webapps/openmrs/WEB-INF/view/module/${project.parent.artifactId}">
+                                        <copy todir="C:\Program Files\Apache Software Foundation\Tomcat 6.0\webapps/openmrs/WEB-INF/view/module/${project.parent.artifactId}">
                                             <fileset dir="src/main/webapp" includes="**/*" />
                                         </copy>
                                     </tasks>
