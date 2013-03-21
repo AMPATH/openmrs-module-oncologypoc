@@ -87,12 +87,12 @@
 <div id="patientSections">
 	<openmrs:hasPrivilege privilege="Patient Dashboard - View Encounters Section">
 		<div id="patientEncounters" style="display:none;">
-			<openmrs:portlet url="patientEncounters" id="patientDashboardEncounters" patientId="${patient.patientId}" parameters="num=100|showPagination=true|formEntryReturnUrl=${pageContext.request.contextPath}/patientDashboard.form"/>
+			<openmrs:portlet url="patientEncounters" id="patientViewEncounters" patientId="${patient.patientId}" moduleId="oncologypoc" parameters="num=100|showPagination=true|formEntryReturnUrl=patientView.form"/>
 		</div>
 	</openmrs:hasPrivilege>
 	<openmrs:hasPrivilege privilege="Form Entry">
 		<div id="formEntry" style="display:none;">
-			<openmrs:portlet url="personFormEntry" id="formEntryPortlet" personId="${patient.personId}" parameters="showDecoration=true|showLastThreeEncounters=true|returnUrl=${pageContext.request.contextPath}/patientDashboard.form"/>
+			<openmrs:portlet url="personFormEntry" id="formEntryPortlet" personId="${patient.personId}"  moduleId="oncologypoc" parameters="showDecoration=true|showLastThreeEncounters=true|returnUrl=patientView.form"/>
 		</div>
 	</openmrs:hasPrivilege>
 	<openmrs:hasPrivilege privilege="Form Entry">

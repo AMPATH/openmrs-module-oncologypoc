@@ -14,14 +14,15 @@
 
 	<activator>org.openmrs.module.oncologypoc.OncologyPOCActivator</activator>
 
-	<!-- <updateURL>https://dev.openmrs.org/modules/download/@MODULE_ID@/update.rdf</updateURL> -->
+<!-- 	<updateURL>https://dev.openmrs.org/modules/download/oncologypoc/update.rdf</updateURL> -->
 
 	<require_version>1.8.0</require_version>
+	
 
 	<!-- Extensions -->
 	<extension>
 		<point>org.openmrs.admin.list</point>
-		<class>@MODULE_PACKAGE@.extension.html.AdminList</class>
+		<class>org.openmrs.module.oncologypoc.extension.html.AdminList</class>
 	</extension>
 	<extension>
 		<point>org.openmrs.patientDashboardTab</point>
@@ -46,28 +47,42 @@
 	
 	<!-- Require Global Properties -->
 	<globalProperty>
-		<property>concept.returnPurpose</property>
+		<property>oncologypoc.interceptRoles</property>
 		<defaultValue></defaultValue>
 		<description>
-			Check that the return reason concept is set in the Global properties
-		</description>
-	</globalProperty>
-	
-	<globalProperty>
-		<property>concept.returnProvider</property>
-		<defaultValue></defaultValue>
-		<description>
-			Check that the return provider concept is set in the Global properties
+			Comma separated roles to be intercepted by this module
 		</description>
 	</globalProperty>
 	
 	<!-- Require Privileges -->
+	View Oncology POC
 	<privilege>
 		<name>OncologyPoc View Clinician Alerts</name>
 		<description>
 			Checks whether a provider has permission to view Oncology Alerts
 		</description>
 	</privilege>
+	<privilege>
+		<name>OncologyPoc View Scheduler</name>
+		<description>
+			Views oncology scheduled patients
+		</description>
+	</privilege>
+
+	<filter>
+		<filter-name>OncologyPOCFilter</filter-name>
+		<filter-class>org.openmrs.module.oncologypoc.web.filter.OncologyPOCFilter</filter-class>
+		<init-param>
+			<param-name>oncologyHomePage</param-name>
+			<param-value>/module/oncologypoc/patientView.form</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>OncologyPOCFilter</filter-name>
+		<url-pattern>/patientDashboard.form</url-pattern>
+	</filter-mapping>
+	
+	<!-- Internationalization -->
 	<messages>
 		<lang>en</lang>
 		<file>messages.properties</file>
@@ -80,10 +95,8 @@
 		<lang>es</lang>
 		<file>messages_es.properties</file>
 	</messages>
-	<!-- /Internationalization -->
 	
 	<mappingFiles>
 		SubEncounter.hbm.xml
 	</mappingFiles>
 </module>
-

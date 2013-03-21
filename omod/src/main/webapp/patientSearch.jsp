@@ -48,13 +48,13 @@
     <td width="20%">
     	<div style="background-image:url(/moduleResources/oncologypoc/images/alarm-public-icon.png);background-repeat:repeat-x; height: 100%; width: 100%; float: left; position: relative; padding: 10px; ">
     		<ul>
-    			<a href="#" onclick="showhide('patientSearch');"><img src='<c:url value="/moduleResources/oncologypoc/images/search-b-icon.png"/>'/></a>
+    			<a href="#" onclick="showhide('patientSearch');"><img src='<c:url value="/moduleResources/oncologypoc/images/search.gif"/>'/></a>
 			</ul>
 			<ul>
-				<a href="#" onclick="showhide('schedules');"><img src='<c:url value="/moduleResources/oncologypoc/images/schedule-1.png"/>'/></a>
+				<a href="#" onclick="showhide('schedules');"><img src='<c:url value="/moduleResources/oncologypoc/images/schedule.gif"/>'/></a>
 			</ul>
 			<ul>
-				<a href="#" onclick="showhide('alerts');"><img src='<c:url value="/moduleResources/oncologypoc/images/alarm-public-icon.png"/>'/></a>
+				<a href="#" onclick="showhide('alerts');"><img src='<c:url value="/moduleResources/oncologypoc/images/alerts.gif"/>'/></a>
 			</ul>
 			
 		</div>

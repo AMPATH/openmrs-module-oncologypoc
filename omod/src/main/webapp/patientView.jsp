@@ -142,8 +142,8 @@ function uncoversection(secid) {
 			<table>
 				<tr>
 					<td>
-						<c:if test="${patient.gender == 'M'}"><img src='<c:url value="/moduleResources/oncologypoc/images/male.jpeg"/>' alt='<spring:message code="Person.gender.male"/>' id="maleGenderIcon"/></c:if>
-						<c:if test="${patient.gender == 'F'}"><img src='<c:url value="/moduleResources/oncologypoc/images/female.jpeg"/>' alt='<spring:message code="Person.gender.female"/>' id="femaleGenderIcon"/></c:if>
+						<c:if test="${patient.gender == 'M'}"><img src='<c:url value="/moduleResources/oncologypoc/images/male.gif"/>' alt='<spring:message code="Person.gender.male"/>' id="maleGenderIcon"/></c:if>
+						<c:if test="${patient.gender == 'F'}"><img src='<c:url value="/moduleResources/oncologypoc/images/female.gif"/>' alt='<spring:message code="Person.gender.female"/>' id="femaleGenderIcon"/></c:if>
 					</td>
 					<td valign="top">
 						<input type="hidden" name="patientId" value="3"/>
@@ -176,6 +176,7 @@ function uncoversection(secid) {
 						</c:if>
 					</td>
 				</tr>
+				<tr><td><br/></td></tr>
 				<tr>
 					<td colspan="2">
 						<div id="patientSubheader">
@@ -204,23 +205,28 @@ function uncoversection(secid) {
 				</tr>
 				<tr>
 					<td colspan="2">
-						<table class="patientLastEncounterTable">
-							<tr class="patientLastEncounterRow">
-								<td class="patientLastEncounterData">
-									<spring:message code="Patient.lastEncounter"/>:
-								</td>
-								<th>
-									<c:forEach items='${openmrs:sort(patientEncounters, "encounterDatetime", true)}' var="lastEncounter" varStatus="lastEncounterStatus" end="0">
-										${lastEncounter.encounterType.name} @ ${lastEncounter.location.name}, <openmrs:formatDate date="${lastEncounter.encounterDatetime}" type="medium" />
-									</c:forEach>
-									<c:if test="${fn:length(patientEncounters) == 0}">
-										<spring:message code="Encounter.no.previous"/>
-									</c:if>	
-								</th>
-							</tr>
-						</table>
+						<div id="patientSubheader">
+							<table class="patientLastEncounterTable">
+								<tr class="patientLastEncounterRow">
+									<td class="patientLastEncounterData">
+										<spring:message code="Patient.lastEncounter"/>:
+									</td>
+									<th>
+										<small>
+											<c:forEach items='${openmrs:sort(patientEncounters, "encounterDatetime", true)}' var="lastEncounter" varStatus="lastEncounterStatus" end="0">
+												${lastEncounter.encounterType.name} @ ${lastEncounter.location.name}, <openmrs:formatDate date="${lastEncounter.encounterDatetime}" type="medium" />
+											</c:forEach>
+											<c:if test="${fn:length(patientEncounters) == 0}">
+												<spring:message code="Encounter.no.previous"/>
+											</c:if>
+										</small>
+									</th>
+								</tr>
+							</table>
+						</div>
 					</td>
 				</tr>
+				<tr><td><br/></td></tr>
 				<tr>
 					<td colspan="2">
 						<c:forEach var="address" items="${patient.addresses}" varStatus="status">
@@ -243,7 +249,7 @@ function uncoversection(secid) {
 			</table>
 
 		</td>
-		<td width="70%" valign="top">
+		<td width="70%" class="box" valign="top">
 			<openmrs:portlet id="patientViewSegments" url="patientViewSegments" moduleId="oncologypoc" parameters="size=full|postURL=patientDashboard.form|showIncludeVoided=false|viewType=shortEdit" />
 		</td>
 	</tr>
