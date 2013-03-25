@@ -44,9 +44,12 @@ public class OncologyPOCFilter implements Filter {
 					}
 				}
 
-				if ((interceptThisOne) && (!autheticatedUser.isSuperUser()))
-					((HttpServletResponse) response).sendRedirect(((HttpServletRequest) request).getContextPath() + homePage + "?patientId=" + patientId);
-				else
+				if (interceptThisOne && !autheticatedUser.isSuperUser()) {
+					if (requestURL.contains("patientDashboard"))
+						((HttpServletResponse) response).sendRedirect(((HttpServletRequest) request).getContextPath() + homePage + "?patientId=" + patientId);
+					if (requestURL.contains("findPatient.htm"))
+						((HttpServletResponse) response).sendRedirect(((HttpServletRequest) request).getContextPath() + "/module/oncologypoc/patientSearch.htm");
+				} else
 					chain.doFilter(request, response);
 			}
 		}

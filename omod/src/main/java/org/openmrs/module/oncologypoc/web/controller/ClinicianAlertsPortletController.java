@@ -1,9 +1,9 @@
 package org.openmrs.module.oncologypoc.web.controller;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.util.Date;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -13,9 +13,14 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.Form;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.Extension;
+import org.openmrs.module.Extension.MEDIA_TYPE;
+import org.openmrs.module.ModuleFactory;
+import org.openmrs.module.oncologypoc.api.SubEncounter;
 import org.openmrs.module.oncologypoc.api.service.OncologyPOCService;
-import org.openmrs.util.OpenmrsUtil;
+import org.openmrs.module.web.extension.FormEntryHandler;
 import org.openmrs.web.WebConstants;
 import org.openmrs.web.controller.PortletController;
 import org.springframework.web.servlet.ModelAndView;
@@ -38,47 +43,42 @@ public class ClinicianAlertsPortletController  extends PortletController {
 		return super.handleRequest(request, response);
 	}
 	
-	protected void populateModel(HttpServletRequest request, Map<String,Object> model) {
-		OncologyPOCService pvs = (OncologyPOCService) Context.getService(OncologyPOCService.class);
-		DateFormat df = OpenmrsUtil.getDateFormat(Context.getLocale());
-		
-		String sDate = request.getParameter("fromDate");
-		String eDate = request.getParameter("toDate");
-		Date startDate=null;
-		Date endDate=null;
-		
-		if(sDate !=null && sDate==""){
-			sDate=null;
-		}
-		if(eDate !=null && eDate==""){
-			eDate=null;
-		}
-				
+	protected void populateModel(HttpServletRequest request, Map<String, Object> model) {
+		OncologyPOCService service = (OncologyPOCService) Context.getService(OncologyPOCService.class);
+		Integer length = 5;
+		Integer page = null;
+		boolean endPage = false;
 		try {
-			if(sDate!=null && eDate!=null){
-				startDate=df.parse((sDate));
-				endDate=df.parse(eDate);
-			} else if(sDate==null && eDate!=null){
-				endDate=df.parse(eDate);
-				sDate=eDate;
-				startDate=df.parse((sDate));	
-			} else if(sDate!=null && eDate==null){
-				startDate=df.parse(sDate);
-				eDate=sDate;
-				endDate=df.parse(eDate);	
-			} 
-		} catch (ParseException e) {
-			e.printStackTrace();
+			page = Integer.valueOf(Integer.parseInt(request.getParameter("page")));
+		} catch (NumberFormatException e) {
+			page = 0;
 		}
+		Integer nextPage = Integer.valueOf(page + 1);
+		List<SubEncounter> subEncounters = service.getAllSubEncounters(nextPage * length, length);
 		
-		if (startDate==null)
-			startDate=new Date();
-		
-		if (endDate==null)
-			endDate=new Date();
-		
-		model.put("alertPatients", pvs.getReturnPatients(startDate, endDate));
-		model.put("startDate", df.format(startDate));
-		model.put("endDate", df.format(endDate));
+		if ((subEncounters.size() < 1) || (subEncounters == null))
+			endPage = true;
+
+		model.put("subEncounters", service.getAllSubEncounters(page * length, length));
+		model.put("endPage", endPage);
+		model.put("page", nextPage);
+
+		Map<Form, String> editUrlMap = new HashMap<Form, String>();
+		List<Extension> handlers = ModuleFactory.getExtensions("org.openmrs.module.web.extension.FormEntryHandler", MEDIA_TYPE.html);
+		if (handlers != null) {
+			for (Extension ext : handlers) {
+				FormEntryHandler handler = (FormEntryHandler) ext;
+				Collection<Form> toEdit = handler.getFormsModuleCanEdit();
+				if (toEdit != null) {
+					if (handler.getEditFormUrl() == null)
+						throw new IllegalArgumentException("form entry handler " + handler.getClass()
+						        + " is trying to handle editing forms but specifies no URL");
+					for (Form form : toEdit) {
+						editUrlMap.put(form, handler.getEditFormUrl());
+					}
+				}
+			}
+		}
+		model.put("formToEditUrlMap", editUrlMap);
 	}
 }

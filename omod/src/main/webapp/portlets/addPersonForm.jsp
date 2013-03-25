@@ -60,7 +60,7 @@
 			</form>
 		</div>
 		
-		<script type="text/javascript"><!--
+		<script type="text/javascript">
 			clearError("name");
 			clearError("birthdate");
 			clearError("gender");
@@ -166,8 +166,6 @@
 			    return true;
 			}
 			
-		--></script>
-		
+		</script>
 	</div>
-
 </c:if>

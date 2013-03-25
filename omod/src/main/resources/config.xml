@@ -81,6 +81,10 @@
 		<filter-name>OncologyPOCFilter</filter-name>
 		<url-pattern>/patientDashboard.form</url-pattern>
 	</filter-mapping>
+	<filter-mapping>
+		<filter-name>OncologyPOCFilter</filter-name>
+		<url-pattern>/findPatient.htm</url-pattern>
+	</filter-mapping>
 	
 	<!-- Internationalization -->
 	<messages>

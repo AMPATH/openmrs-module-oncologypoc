@@ -10,15 +10,17 @@ import org.openmrs.module.oncologypoc.api.db.OncologyPOCDAO;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
-public interface OncologyPOCService extends OpenmrsService{
-	
+public interface OncologyPOCService extends OpenmrsService {
+
 	public void setOncologyPOCDAO(OncologyPOCDAO dao);
 
 	public List<ExtendedPatient> getReturnPatients(Date sDate, Date eDate);
-	
-	public List<SubEncounter> getAllSubEncounters();
-	
+
 	public void saveSubEncounter(SubEncounter subEncounter);
-	
+
 	public void deleteSubEncounter(SubEncounter subEncounter);
+
+	public SubEncounter getSubEncounter(Integer encounterId);
+
+	public List<SubEncounter> getAllSubEncounters(Integer start, Integer length);
 }

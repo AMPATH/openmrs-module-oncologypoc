@@ -11,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Expression;
+import org.hibernate.criterion.Order;
 import org.openmrs.Concept;
 import org.openmrs.Obs;
 import org.openmrs.Patient;
@@ -24,6 +25,8 @@ public class HibernateOncologyPOCDAO implements OncologyPOCDAO {
 
 	protected final Log log = LogFactory.getLog(getClass());
 
+	SimpleDateFormat df=new SimpleDateFormat("MMM dd, yyyy");
+	
 	/**
 	 * Hibernate session factory
 	 */
@@ -36,11 +39,7 @@ public class HibernateOncologyPOCDAO implements OncologyPOCDAO {
 		this.sessionFactory = sessionFactory;
 	}
 
-	/**
-	 * @see org.openmrs.module.oncologypoc.db.OncologyPOCDAO#getPatientsByEncounterType(java.util.List)
-	 */
-	SimpleDateFormat df=new SimpleDateFormat("MMM dd, yyyy");
-
+	@Override
 	public List<ExtendedPatient> getReturnPatients(Date sDate,Date eDate) {
 		Calendar sCal = Calendar.getInstance();
 		Calendar eCal = Calendar.getInstance();
@@ -64,8 +63,7 @@ public class HibernateOncologyPOCDAO implements OncologyPOCDAO {
 		Collection<Obs> returnObs=(Collection<Obs>)criteria.list();
 		
 		for (Obs observation:returnObs){
-			ExtendedPatient ePatient=new ExtendedPatient(
-					Context.getPatientService().getPatient(new Patient(observation.getPerson()).getPatientId()));
+			ExtendedPatient ePatient=new ExtendedPatient(Context.getPatientService().getPatient(new Patient(observation.getPerson()).getPatientId()));
 			ePatient.setReturnDate(observation.getValueDatetime());
 			ePatients.add(ePatient);
 		}
@@ -76,6 +74,24 @@ public class HibernateOncologyPOCDAO implements OncologyPOCDAO {
 	public List<SubEncounter> getAllSubEncounters() {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(SubEncounter.class);
 		return (List<SubEncounter>) criteria.list();
+	}
+	
+	@Override
+	public List<SubEncounter> getAllSubEncounters(Integer start, Integer length) {
+		Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(SubEncounter.class);
+		if (start != null)
+			criteria.setFirstResult(start);
+		if (length != null && length.intValue() > 0)
+			criteria.setMaxResults(length);
+		criteria.addOrder(Order.desc("encounterId"));
+		return criteria.list();
+	}
+	
+	@Override
+	public SubEncounter getSubEncounter(Integer encounterId) {
+		Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(SubEncounter.class);
+		criteria.add(Expression.like("encounterId", encounterId));
+		return (SubEncounter) criteria.uniqueResult();
 	}
 
 	@Override

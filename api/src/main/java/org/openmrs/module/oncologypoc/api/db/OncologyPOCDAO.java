@@ -21,4 +21,8 @@ public interface OncologyPOCDAO {
 	public void saveSubEncounter(SubEncounter subEncounter);
 
 	public void deleteSubEncounter(SubEncounter subEncounter);
+
+	public SubEncounter getSubEncounter(Integer encounterId);
+
+	public List<SubEncounter> getAllSubEncounters(Integer start, Integer length);
 }

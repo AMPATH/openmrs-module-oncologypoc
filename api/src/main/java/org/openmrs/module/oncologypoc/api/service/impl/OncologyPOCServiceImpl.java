@@ -26,15 +26,16 @@ public class OncologyPOCServiceImpl extends BaseOpenmrsService implements Oncolo
 		this.dao = dao;
 	}
 	
+	@Override
 	public List<ExtendedPatient> getReturnPatients(Date sDate, Date eDate) {
 		return dao.getReturnPatients(sDate, eDate);
 	}
 
 	@Override
-	public List<SubEncounter> getAllSubEncounters() {
-		return dao.getAllSubEncounters();
+	public List<SubEncounter> getAllSubEncounters(Integer start, Integer length) {
+		return dao.getAllSubEncounters(start, length);
 	}
-
+	
 	@Override
 	public void saveSubEncounter(SubEncounter subEncounter) {
 		dao.saveSubEncounter(subEncounter);
@@ -43,5 +44,10 @@ public class OncologyPOCServiceImpl extends BaseOpenmrsService implements Oncolo
 	@Override
 	public void deleteSubEncounter(SubEncounter subEncounter) {
 		dao.deleteSubEncounter(subEncounter);
+	}
+
+	@Override
+	public SubEncounter getSubEncounter(Integer encounterId) {
+		return dao.getSubEncounter(encounterId);
 	}
 }
