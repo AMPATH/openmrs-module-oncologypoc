@@ -45,12 +45,40 @@ Parameters:
 	<script type="text/javascript">	
 		<%-- global var and datatable filter for showRetired --%>
 		var showRetiredFormsForEntry${model.id} = false;
+		
+		<%-- global var and datatable filter for showAllForms --%>
+		var showAllFormsForEntry${model.id} = false;
+		
 		$j.fn.dataTableExt.afnFiltering.push(
 			function( oSettings, aData, iDataIndex ) {
 				if (oSettings.sTableId != 'formEntryTable${model.id}')
 					return true;
-				else
+				else 
 					return showRetiredFormsForEntry${model.id} || aData[4] == 'false';
+				
+			}
+		);
+		
+		<%-- function to show only forms based on a specific encounter type --%>
+		$j.fn.dataTableExt.afnFiltering.push(
+			function( oSettings, aData, iDataIndex ) {
+				if (oSettings.sTableId != 'formEntryTable${model.id}')
+					return true;
+				else {
+					<openmrs:globalProperty var="encType" key="oncologypoc.encounterType" defaultValue="ADULTINITIAL"/>
+					var encTypeFromGP = '${encType}';
+					var temp = new Array();
+					temp = encTypeFromGP.split(",");
+					var showEncounter = false;
+					for (i in temp) {
+						if ($j.trim(aData[3]).toUpperCase() == $j.trim(temp[i]).toUpperCase()) {
+							showEncounter=true;
+							break;
+						}
+					}
+					return showAllFormsForEntry${model.id} || showEncounter;
+				}
+				
 			}
 		);
 
@@ -73,11 +101,20 @@ Parameters:
 			oTable${model.id}.fnDraw(); <%-- trigger filter-and-draw of datatable now --%>
 
 			<%-- trigger filter-and-draw of the datatable whenever the showRetired checkbox changes --%>
+			$j('#showAllForms${model.id}').click(function() {
+				showAllFormsForEntry${model.id} = this.checked;
+				oTable${model.id}.fnDraw();
+			});
+			
+			<%-- trigger filter-and-draw of the datatable whenever the showRetired checkbox changes --%>
 			$j('#showRetired${model.id}').click(function() {
 				showRetiredFormsForEntry${model.id} = this.checked;
 				oTable${model.id}.fnDraw();
 			});
 
+			<%-- move the showAllForms checkbox inside the flow of the datatable after the filter --%>
+			$j('#handleForShowAllForms${model.id}').appendTo($j('#formEntryTable${model.id}_filter'));
+			
 			<%-- move the showRetired checkbox inside the flow of the datatable after the filter --%>
 			$j('#handleForShowRetired${model.id}').appendTo($j('#formEntryTable${model.id}_filter'));
 		});
@@ -93,6 +130,10 @@ Parameters:
 		}
 	</script>
 	<div id="formEntryTableParent${model.id}">
+	<span id="handleForShowAllForms${model.id}">
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="checkbox" id="showAllForms${model.id}"/> Show All Forms
+	</span>
 	<span id="handleForShowRetired${model.id}">
 		&nbsp;&nbsp;&nbsp;&nbsp;
 		<input type="checkbox" id="showRetired${model.id}"/> <spring:message code="SearchResults.includeRetired"/>

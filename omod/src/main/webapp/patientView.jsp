@@ -176,7 +176,20 @@ function uncoversection(secid) {
 						</c:if>
 					</td>
 				</tr>
-				<tr><td><br/></td></tr>
+				<tr><td colspan="2"><hr></td></tr>
+				<tr>
+					<td colspan="2">
+						<c:forEach var="address" items="${patient.addresses}" varStatus="status">
+							<c:if test="${!address.voided}">
+								<% request.setAttribute("address", pageContext.getAttribute("address")); %>
+								<spring:nestedPath path="address">
+									<openmrs:portlet url="addressLayout" id="addressPortlet" size="full" parameters="layoutMode=view|layoutShowTable=false|layoutShowExtended=true" />
+								</spring:nestedPath>
+							</c:if>
+						</c:forEach>
+					</td>
+				</tr>
+				<tr><td colspan="2"><hr></td></tr>
 				<tr>
 					<td colspan="2">
 						<div id="patientSubheader">
@@ -227,18 +240,6 @@ function uncoversection(secid) {
 					</td>
 				</tr>
 				<tr><td><br/></td></tr>
-				<tr>
-					<td colspan="2">
-						<c:forEach var="address" items="${patient.addresses}" varStatus="status">
-							<c:if test="${!address.voided}">
-								<% request.setAttribute("address", pageContext.getAttribute("address")); %>
-								<spring:nestedPath path="address">
-									<openmrs:portlet url="addressLayout" id="addressPortlet" size="full" parameters="layoutMode=view|layoutShowTable=false|layoutShowExtended=true" />
-								</spring:nestedPath>
-							</c:if>
-						</c:forEach>
-					</td>
-				</tr>
 				<tr>
 					<%-- Display selected person attributes from the manage person attributes page --%>
 					<openmrs:forEachDisplayAttributeType personType="patient" displayType="header" var="attrType">

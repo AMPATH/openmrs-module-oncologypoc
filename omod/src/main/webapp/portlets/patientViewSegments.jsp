@@ -95,9 +95,9 @@
 			<openmrs:portlet url="personFormEntry" id="formEntryPortlet" personId="${patient.personId}"  moduleId="oncologypoc" parameters="showDecoration=true|showLastThreeEncounters=true|returnUrl=patientView.form"/>
 		</div>
 	</openmrs:hasPrivilege>
-	<openmrs:hasPrivilege privilege="Form Entry">
+	<openmrs:hasPrivilege privilege="Patient Dashboard - View Flowsheet Section">
 		<div id="flowsheet" style="display:none;">
-			<openmrs:portlet url="flowsheetHtmlForm" id="flowsheet"  moduleId="flowsheet" parameters="showDecoration=true|showLastThreeEncounters=true|returnUrl=${pageContext.request.contextPath}/patientDashboard.form"/>
+			<openmrs:portlet url="flowsheetHtmlForm" id="flowsheet"  moduleId="flowsheet" parameters="showDecoration=true|returnUrl=patientView.form"/>
 		</div>
 	</openmrs:hasPrivilege>
 </div>
