@@ -53,9 +53,8 @@ Parameters:
 			function( oSettings, aData, iDataIndex ) {
 				if (oSettings.sTableId != 'formEntryTable${model.id}')
 					return true;
-				else 
+				else
 					return showRetiredFormsForEntry${model.id} || aData[4] == 'false';
-				
 			}
 		);
 		
@@ -100,7 +99,7 @@ Parameters:
 			});
 			oTable${model.id}.fnDraw(); <%-- trigger filter-and-draw of datatable now --%>
 
-			<%-- trigger filter-and-draw of the datatable whenever the showRetired checkbox changes --%>
+			<%-- trigger filter-and-draw of the datatable whenever the showAllForms checkbox changes --%>
 			$j('#showAllForms${model.id}').click(function() {
 				showAllFormsForEntry${model.id} = this.checked;
 				oTable${model.id}.fnDraw();

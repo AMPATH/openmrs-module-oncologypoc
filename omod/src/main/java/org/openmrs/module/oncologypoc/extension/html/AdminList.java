@@ -41,18 +41,8 @@ public class AdminList extends AdministrationSectionExt {
 	 * @see org.openmrs.module.web.extension.AdministrationSectionExt#getLinks()
 	 */
 	public Map<String, String> getLinks() {
-		
 		Map<String, String> map = new LinkedHashMap<String, String>();
-		
-		map.put("module/oncologypoc/scheduledPatients.form", "Scheduled Patients");
-		map.put("module/oncologypoc/schedulePatients.form", "Create Patient Schedule");
-		map.put("module/oncologypoc/tracingsForm.form", "Tracings");
-		map.put("module/oncologypoc/providerWorkload.form", "Provider Workload statistics");
-		map.put("module/oncologypoc/bookingStatistics.form", "Booking Statistics");
-		map.put("module/oncologypoc/patientSearch.htm", "Find Patient");
-		
+		map.put("module/oncologypoc/patientSearch.htm", "Oncology DashBoard");
 		return map;
-		
 	}
-
 }

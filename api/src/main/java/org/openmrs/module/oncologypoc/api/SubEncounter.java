@@ -1,5 +1,9 @@
 package org.openmrs.module.oncologypoc.api;
 
+import org.openmrs.Encounter;
+import org.openmrs.Patient;
+import org.openmrs.api.context.Context;
+
 
 public class SubEncounter{
 	
@@ -34,5 +38,19 @@ public class SubEncounter{
 	 */
 	public Integer getEncounterId() {
 		return encounterId;
+	}
+	
+	/**
+	 * @return the encounter
+	 */
+	public Encounter getEncounter() {
+		return Context.getEncounterService().getEncounter(this.encounterId);
+	}
+	
+	/**
+	 * @return the Patient
+	 */
+	public Patient getPatient() {
+		return Context.getPatientService().getPatient(getEncounter().getPatientId());
 	}
 }
