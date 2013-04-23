@@ -63,15 +63,18 @@
 				<div class="leftnavSchedules-div">
 					<a href="#" onclick="showhide('schedules');">Patient Schedules</a>
 				</div>
+				<hr style="height: 5px; border: 0px solid #D6D6D6; border-top-width: 1px;" />
 			</openmrs:hasPrivilege>
 			<openmrs:hasPrivilege privilege="OncologyPoc View Clinician Alerts">
 				<div class="leftnavAlerts-div">
 					<a href="#" onclick="showhide('alerts');">Clinician Alerts</a>
 			 	</div>
+			 	<hr style="height: 5px; border: 0px solid #D6D6D6; border-top-width: 1px;" />
 			</openmrs:hasPrivilege>
 			<div class="leftnavSearch-div">
 				<a href="#" onclick="showhide('patientSearch');">Patient Search</a>
 			</div>
+			<hr style="height: 5px; border: 0px solid #D6D6D6; border-top-width: 1px;" />
 		</div>
     </td>
     <td width="80%" valign="top">
