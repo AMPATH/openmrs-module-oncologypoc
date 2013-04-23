@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/template/include.jsp"%>
 <openmrs:require privilege="OncologyPoc View Scheduler"
 	otherwise="/login.htm"
-	redirect="/module/oncologypoc/portlets/patientSearch.htm" />
+	redirect="/module/oncologypoc/portlets/scheduledPatients.form" />
 
 <script src="/openmrs/scripts/calendar/calendar.js"
 	type="text/javascript">

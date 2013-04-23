@@ -45,23 +45,8 @@ public class ClinicianAlertsPortletController  extends PortletController {
 	
 	protected void populateModel(HttpServletRequest request, Map<String, Object> model) {
 		OncologyPOCService service = (OncologyPOCService) Context.getService(OncologyPOCService.class);
-		Integer length = 5;
-		Integer page = null;
-		boolean endPage = false;
-		try {
-			page = Integer.valueOf(Integer.parseInt(request.getParameter("page")));
-		} catch (NumberFormatException e) {
-			page = 0;
-		}
-		Integer nextPage = Integer.valueOf(page + 1);
-		List<SubEncounter> subEncounters = service.getAllSubEncounters(nextPage * length, length);
-		
-		if ((subEncounters.size() < 1) || (subEncounters == null))
-			endPage = true;
 
-		model.put("subEncounters", service.getAllSubEncounters(page * length, length));
-		model.put("endPage", endPage);
-		model.put("page", nextPage);
+		model.put("subEncounters", service.getAllSubEncounters());
 
 		Map<Form, String> editUrlMap = new HashMap<Form, String>();
 		List<Extension> handlers = ModuleFactory.getExtensions("org.openmrs.module.web.extension.FormEntryHandler", MEDIA_TYPE.html);

@@ -32,8 +32,8 @@ public class OncologyPOCServiceImpl extends BaseOpenmrsService implements Oncolo
 	}
 
 	@Override
-	public List<SubEncounter> getAllSubEncounters(Integer start, Integer length) {
-		return dao.getAllSubEncounters(start, length);
+	public List<SubEncounter> getAllSubEncounters() {
+		return dao.getAllSubEncounters();
 	}
 	
 	@Override

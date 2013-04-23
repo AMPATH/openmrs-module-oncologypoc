@@ -41,7 +41,6 @@ public class ScheduledPatientsPortletController  extends PortletController {
 	protected void populateModel(HttpServletRequest request, Map<String,Object> model) {
 		OncologyPOCService service = (OncologyPOCService) Context.getService(OncologyPOCService.class);
 		DateFormat df = OpenmrsUtil.getDateFormat(Context.getLocale());
-		System.out.println("Am here");
 		String sDate = request.getParameter("fromDate");
 		String eDate = request.getParameter("toDate");
 		Date startDate=null;

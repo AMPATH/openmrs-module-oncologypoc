@@ -22,5 +22,5 @@ public interface OncologyPOCService extends OpenmrsService {
 
 	public SubEncounter getSubEncounter(Integer encounterId);
 
-	public List<SubEncounter> getAllSubEncounters(Integer start, Integer length);
+	public List<SubEncounter> getAllSubEncounters();
 }
