@@ -1,5 +1,5 @@
 <%@ include file="/WEB-INF/template/include.jsp"%>
-<openmrs:require privilege="OncologyPoc View Scheduler"
+<openmrs:require privilege="OncologyPoc View Patient Schedules"
 	otherwise="/login.htm"
 	redirect="/module/oncologypoc/portlets/scheduledPatients.form" />
 

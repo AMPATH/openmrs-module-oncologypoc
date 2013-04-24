@@ -24,10 +24,6 @@
 		<point>org.openmrs.admin.list</point>
 		<class>org.openmrs.module.oncologypoc.extension.html.AdminList</class>
 	</extension>
-	<extension>
-		<point>org.openmrs.patientDashboardTab</point>
-		<class>org.openmrs.module.oncologypoc.extension.html.PatientAbstractPatientDashBoardTabExt</class>
-	</extension>
 	
 	<extension>
 		<point>org.openmrs.module.oncologypoc.patientSchedules</point>
@@ -63,7 +59,7 @@
 		</description>
 	</privilege>
 	<privilege>
-		<name>OncologyPoc View Scheduler</name>
+		<name>OncologyPoc View Patient Schedules</name>
 		<description>
 			Views oncology scheduled patients
 		</description>

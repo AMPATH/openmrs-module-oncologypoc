@@ -59,7 +59,7 @@
     <td width="20%" valign="top">
     	<img src='<c:url value="/moduleResources/oncologypoc/images/logo.png"/>'/>
     	<div class="leftnav-div">
-			<openmrs:hasPrivilege privilege="OncologyPoc View Scheduler">
+			<openmrs:hasPrivilege privilege="OncologyPoc View Patient Schedules">
 				<div class="leftnavSchedules-div">
 					<a href="#" onclick="showhide('schedules');">Patient Schedules</a>
 				</div>
@@ -79,7 +79,7 @@
     </td>
     <td width="80%" valign="top">
 		<div id="schedules" style="display:block;">
-			<openmrs:hasPrivilege privilege="OncologyPoc View Scheduler">
+			<openmrs:hasPrivilege privilege="OncologyPoc View Patient Schedules">
 				<h3><spring:message	code="oncologypoc.Scheduler.scheduledPatients.title" /></h3>
 				<openmrs:extensionPoint pointId="org.openmrs.module.oncologypoc.patientSchedules" type="html">
 					<openmrs:portlet id="${extension.portletId}" url="${extension.portletUrl}" parameters="${extension.portletParameters}"/>
