@@ -1,6 +1,7 @@
 <%@ include file="/WEB-INF/template/include.jsp"%>
 <%@ include file="/WEB-INF/template/header.jsp" %>
-<openmrs:require privilege="OncologyPoc View Clinician Alerts" otherwise="/login.htm"
+<openmrs:require privilege="OncologyPoc View Patient Schedules" otherwise="/login.htm"
+							OncologyPoc View Patient Schedules
 	redirect="/module/oncologypoc/patientSearch.htm" />
 	
 <openmrs:htmlInclude file="/moduleResources/oncologypoc/scripts/css/nav.css"/>
