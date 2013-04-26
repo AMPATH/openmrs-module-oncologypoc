@@ -1,10 +1,60 @@
-#leftNav{ float:left; background:#FFFFFF; padding:0px; margin:0px 0px 0px 4px; display:inline; width:183px; min-height:300px; height:auto!important; height:300px;}
-.logo{ float:left; width:183px; height:188px; margin:0px; padding:0px; border:0px;}
-.leftnav-div{ float:left; background:url(../../images/left_navbg.jpg) left top repeat-x #C3EDFF; width:240px; height:330px; border-left:1px solid #B4E3F9; border-bottom:1px solid #B4E3F9; margin:0px 0px 0px 0px ; padding:0px;}
-.leftnav-div a:link,.leftnav-div a:visited{width:200px; text-align:left; vertical-align:middle; padding-left:60px;padding-top:20px; height:50px; display:block; font-size:12px; color:#006FAE; margin-left:10px; font-weight:bold; text-decoration:none;}
+.content-div {
+	border: 1px solid #CCCCCC;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	padding: 10px;
+}
 
-.leftnavSearch-div a:link,.leftnav-div a:visited{background:url(../../images/search.gif) left top no-repeat;}
+.left-nav-div {
+	font-size: 0;
+	border-right: 3px solid #CCCCCC;
+	border-left: 1px solid #CCCCCC;
+	border-top: 1px solid #CCCCCC;
+	border-bottom: 1px solid #CCCCCC;
+	overflow: hidden;
+	float: left;
+	width: 270px;
+	height: 330px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	font-family: "Helvetica-Neue", Helvetica, Arial, sans-serif;
+	background: -moz-linear-gradient(top, #FFFFFF 30%, #cccccc 100%);
+	background: -o-linear-gradient(top, #FFFFFF 30%, #cccccc 100%);
+	background: -ms-linear-gradient(top, #FFFFFF 30%, #cccccc 100%);
+	background: linear-gradient(top, #FFFFFF 30%, #cccccc 100%);
+}
 
-.leftnavSchedules-div a:link,.leftnav-div a:visited{ background:url(../../images/schedule.gif) left top no-repeat;}
+.left-nav-div a {
+	text-align: left;
+	vertical-align: middle;
+	padding: 40px 0 40px 60px;
+	height: 100%;
+	display: block;
+	font-size: 12px;
+	font-weight: bold;
+	text-decoration: none;
+	position: relative;
+	-webkit-transition: background 0.3s ease;
+	-moz-transition: background 0.3s ease;
+	-o-transition: background 0.3s ease;
+	transition: background 0.3s ease;
+	box-shadow: 8px 0px 20px 2px #CCCCCC;
+}
 
-.leftnavAlerts-div a:link,.leftnav-div a:visited{ background:url(../../images/alerts.gif) left top no-repeat;}
+.left-nav-div a:hover,.left-nav-div a:focus {
+	/* Fall back for web browsers that doesn't support RGBa */
+	background: rgb(0, 0, 0) transparent;
+	/* RGBa with 0.19 opacity */
+	background: rgba(0, 0, 0, 0.19);
+	/* For IE 5.5 - 7*/
+	filter: progid : DXImageTransform.Microsoft.gradient ( startColorstr = #99000000, endColorstr = #99000000 );
+	/* For IE 8*/
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+	color: white;
+	border-top-left-radius: 10px 10px;
+	border-bottom-left-radius: 10px 10px;
+	-webkit-transition: background 0.05s ease;
+	-moz-transition: background 0.05s ease;
+	-o-transition: background 0.05s ease;
+	transition: background 0.05s ease
+}

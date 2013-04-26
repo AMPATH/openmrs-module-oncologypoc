@@ -20,91 +20,30 @@
 <openmrs:htmlInclude file="/scripts/flot/jquery.flot.multiple.threshold.js"/> 
 <%-- /end file imports for portlets --%>
 
-<script type="text/javascript">
-
-window.onload = init;
-
-function init() {
-	var sections = new Array();
-	var optform = document.getElementById("optionsForm");
-	children = optform.childNodes;
-	var seci = 0;
-	for(i=0;i<children.length;i++) {
-		if(children[i].nodeName.toLowerCase().indexOf('fieldset') != -1) {
-			children[i].id = 'optsection-' + seci;
-			children[i].className = 'optsection';
-			legends = children[i].getElementsByTagName('legend');
-			sections[seci] = new Object();
-			if(legends[0] && legends[0].firstChild.nodeValue)
-				sections[seci].text = legends[0].firstChild.nodeValue;
-			else
-				sections[seci].text = '# ' + seci;
-			sections[seci].secid = children[i].id;
-			sections[seci].error = containsError(children[i]);
-			seci++;
-			if(sections.length != 1)
-				children[i].style.display = 'none';
-			else
-				var selectedid = children[i].id;
+<style>
+	.boxHeader{
+		background-color:#cccccc;
+		border: 1px solid #cccccc;
+		border-top-left-radius: 5px 5px;
+		border-top-right-radius: 5px 5px;
+		
 		}
-	}
-	
-	var toc = document.createElement('ul');
-	toc.id = 'optionsTOC';
-	toc.selectedid = selectedid;
-	for(i=0;i<sections.length;i++) {
-		var li = document.createElement('li');
-		if(i == 0) li.className = 'selected';
-		var a =  document.createElement('a');
-		a.href = '#' + sections[i].secid;
-		a.onclick = uncoversection;
-		a.appendChild(document.createTextNode(sections[i].text));
-		a.secid = sections[i].secid;
-		a.id = sections[i].secid + "_link";
-		if (sections[i].error) {
-			a.className = "error";
+	.demographicsBox{
+		background-color:#cccccc;
+		border: 1px solid #cccccc;
+		border-radius: 15px 15px;
+		
 		}
-		li.appendChild(a);
-		toc.appendChild(li);
-	}
-	optform.insertBefore(toc, children[0]);
-
-	var hash = document.location.hash;
-	if (hash.length > 1) {
-		var autoSelect = hash.substring(1, hash.length);
-		for(i=0;i<sections.length;i++) {
-			if (sections[i].text == autoSelect)
-				uncoversection(sections[i].secid + "_link");
+	.box{
+		border: 1px solid #cccccc;
 		}
-	}
-}
-
-function uncoversection(secid) {
-	var obj = this;
-	if (typeof secid == 'string') {
-		obj = document.getElementById(secid);
-		if (obj == null)
-			return false;
-	}
-
-	var ul = document.getElementById('optionsTOC');
-	var oldsecid = ul.selectedid;
-	var newsec = document.getElementById(obj.secid);
-	if(oldsecid != obj.secid) {
-		document.getElementById(oldsecid).style.display = 'none';
-		newsec.style.display = 'block';
-		ul.selectedid = obj.secid;
-		lis = ul.getElementsByTagName('li');
-		for(i=0;i< lis.length;i++) {
-			lis[i].className = '';
+	.portletDiv{
+		border: 1px solid #cccccc;
+		-moz-border-radius: 15px;
+		border-radius: 15px;
+		padding:10px;
 		}
-		obj.parentNode.className = 'selected';
-	}
-	newsec.blur();
-	return false;
-}
-
-</script>
+</style>
 
 <c:if test="${patient.voided}">
 	<div id="patientDashboardVoided" class="retiredMessage">
@@ -134,10 +73,10 @@ function uncoversection(secid) {
 <table width="100%">
 	<tr>
 		<c:if test="${empty patientReasonForExit}">
-			<td width="40%" id="patientHeader" class="boxHeader" width="30%">
+			<td width="40%" id="patientHeader" class="demographicsBox boxHeader" >
 		</c:if>
 		<c:if test="${not empty patientReasonForExit}">
-			<td width="40%" id="patientHeader" class="boxHeaderRed" width="30%">
+		<td width="40%" id="patientHeader" class="boxHeaderRed">
 		</c:if>
 			<table>
 				<tr>
@@ -145,20 +84,38 @@ function uncoversection(secid) {
 						<c:if test="${patient.gender == 'M'}"><img src='<c:url value="/moduleResources/oncologypoc/images/male.gif"/>' alt='<spring:message code="Person.gender.male"/>' id="maleGenderIcon"/></c:if>
 						<c:if test="${patient.gender == 'F'}"><img src='<c:url value="/moduleResources/oncologypoc/images/female.gif"/>' alt='<spring:message code="Person.gender.female"/>' id="femaleGenderIcon"/></c:if>
 					</td>
-					<td valign="top">
+					<td valign="top" align="left">
 						<input type="hidden" name="patientId" value="3"/>
-						<div id="patientHeaderPatientName">${patient.personName}</div><br><br>
-						<c:if test="${patient.age > 0}">${patient.age} <spring:message code="Person.age.years"/></c:if>
-						<c:if test="${patient.age == 0}">< 1 <spring:message code="Person.age.year"/></c:if>
-						<span id="patientHeaderPatientBirthdate"><c:if test="${not empty patient.birthdate}">(<c:if test="${patient.birthdateEstimated}">~</c:if><openmrs:formatDate date="${patient.birthdate}" type="medium" />)</c:if><c:if test="${empty patient.birthdate}"><spring:message code="Person.age.unknown"/></c:if></span>
-						<br><br>
-						<div id="patientHeaderPreferredIdentifier">
-							<c:if test="${fn:length(patient.activeIdentifiers) > 0}">
-								<c:forEach var="identifier" items="${patient.activeIdentifiers}" begin="0" end="0">
-									<span class="patientHeaderPatientIdentifier"><span id="patientHeaderPatientIdentifierType">${identifier.identifierType.name}<openmrs:extensionPoint pointId="org.openmrs.patientDashboard.afterPatientHeaderPatientIdentifierType" type="html" parameters="identifierLocation=${identifier.location.name}"/>:</span> ${identifier.identifier}</span>
-								</c:forEach>
-							</c:if>
+						<div id="patientHeaderPatientName">
+							<table width="205">
+								<tr>
+									<td>
+										<h5>${patient.personName}</h5>
+									</td>
+								</tr>
+								<tr>
+									<td align="left">
+										<p style="font-family:Verdana;font-size:11px;">
+											<c:if test="${patient.age > 0}">${patient.age} <spring:message code="Person.age.years"/></c:if>
+											<c:if test="${patient.age == 0}">< 1 <spring:message code="Person.age.year"/></c:if>
+											<span id="patientHeaderPatientBirthdate"><c:if test="${not empty patient.birthdate}">(<c:if test="${patient.birthdateEstimated}">~</c:if><openmrs:formatDate date="${patient.birthdate}" type="medium" />)</c:if><c:if test="${empty patient.birthdate}"><spring:message code="Person.age.unknown"/></c:if></span>
+										</p>
+									</td>
+								</tr>
+								<tr>
+									<td>
+									<c:if test="${fn:length(patient.activeIdentifiers) > 0}">
+										<c:forEach var="identifier" items="${patient.activeIdentifiers}" begin="0" end="0">
+												<openmrs:extensionPoint pointId="org.openmrs.patientDashboard.afterPatientHeaderPatientIdentifierType" type="html" parameters="identifierLocation=${identifier.location.name}"/>
+												<h4>${identifier.identifier}<a href="" title="${identifier.identifierType.name}"><b><img height="20" width="20" src='<c:url value="/moduleResources/oncologypoc/images/info.gif"/>'/></b></a></h4>
+												
+										</c:forEach>
+									</c:if>
+									</td>
+								</tr>
+							</table>
 						</div>
+						
 						<c:if test="${fn:length(patient.activeIdentifiers) > 1}">
 							<c:forEach var="identifier" items="${patient.activeIdentifiers}" begin="1" end="1">
 								<span class="patientHeaderPatientIdentifier">${identifier.identifierType.name}<openmrs:extensionPoint pointId="org.openmrs.patientDashboard.afterPatientHeaderPatientIdentifierType" type="html" parameters="identifierLocation=${identifier.location.name}"/>: ${identifier.identifier}</span>
@@ -176,7 +133,7 @@ function uncoversection(secid) {
 						</c:if>
 					</td>
 				</tr>
-				<tr><td colspan="2"><hr></td></tr>
+				<tr><td colspan="2"><hr style="height:5px;border:0px solid #FFFFFF; border-top-width:1px;"/></td></tr>
 				<tr>
 					<td colspan="2">
 						<c:forEach var="address" items="${patient.addresses}" varStatus="status">
@@ -189,7 +146,7 @@ function uncoversection(secid) {
 						</c:forEach>
 					</td>
 				</tr>
-				<tr><td colspan="2"><hr></td></tr>
+				<tr><td colspan="2"><hr style="height:5px;border:0px solid #FFFFFF; border-top-width:1px;"/></td></tr>
 				<tr>
 					<td colspan="2">
 						<div id="patientSubheader">
@@ -217,18 +174,43 @@ function uncoversection(secid) {
 					</th>
 				</tr>
 				<tr>
+					<c:forEach items='${openmrs:sort(patientEncounters, "encounterDatetime", true)}' var="lastEncounter" varStatus="lastEncounterStatus" end="0">
 					<td colspan="2">
 						<div id="patientSubheader">
 							<table class="patientLastEncounterTable">
 								<tr class="patientLastEncounterRow">
-									<td class="patientLastEncounterData">
+									<td class="patientLastEncounterData" align="right">
 										<spring:message code="Patient.lastEncounter"/>:
 									</td>
 									<th>
 										<small>
-											<c:forEach items='${openmrs:sort(patientEncounters, "encounterDatetime", true)}' var="lastEncounter" varStatus="lastEncounterStatus" end="0">
-												${lastEncounter.encounterType.name} @ ${lastEncounter.location.name}, <openmrs:formatDate date="${lastEncounter.encounterDatetime}" type="medium" />
-											</c:forEach>
+												${lastEncounter.encounterType.name}
+											<c:if test="${fn:length(patientEncounters) == 0}">
+												<spring:message code="Encounter.no.previous"/>
+											</c:if>
+										</small>
+									</th>
+								</tr>
+								<tr class="patientLastEncounterRow">
+									<td class="patientLastEncounterData" align="right">
+										<spring:message code="Encounter Location"/>:
+									</td>
+									<th>
+										<small>
+											${lastEncounter.location.name}
+											<c:if test="${fn:length(patientEncounters) == 0}">
+												<spring:message code="Encounter.no.previous"/>
+											</c:if>
+										</small>
+									</th>
+								</tr>
+								<tr class="patientLastEncounterRow">
+									<td class="patientLastEncounterData" align="right">
+										<spring:message code="Encounter Date"/>:
+									</td>
+									<th>
+										<small>
+											<openmrs:formatDate date="${lastEncounter.encounterDatetime}" type="medium" />
 											<c:if test="${fn:length(patientEncounters) == 0}">
 												<spring:message code="Encounter.no.previous"/>
 											</c:if>
@@ -238,6 +220,7 @@ function uncoversection(secid) {
 							</table>
 						</div>
 					</td>
+				</c:forEach>
 				</tr>
 				<tr><td><br/></td></tr>
 				<tr>
@@ -250,7 +233,7 @@ function uncoversection(secid) {
 			</table>
 
 		</td>
-		<td width="70%" class="box" valign="top">
+		<td width="70%" class="portletDiv" valign="top">
 			<openmrs:portlet id="patientViewSegments" url="patientViewSegments" moduleId="oncologypoc" parameters="size=full|postURL=patientDashboard.form|showIncludeVoided=false|viewType=shortEdit" />
 		</td>
 	</tr>

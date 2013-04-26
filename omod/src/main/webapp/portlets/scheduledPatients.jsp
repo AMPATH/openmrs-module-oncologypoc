@@ -8,8 +8,9 @@
 </script>
 
 <c:set var="patients" value="${model.patients}"/>
-<div class="scheduledPatients" style="width:100%">
-	<b class="boxHeader" style="width:100%">
+<div style="width:100%; margin-left:10px;">
+<h3><spring:message	code="oncologypoc.Scheduler.scheduledPatients.title" /></h3>
+	<b class="boxHeader">
 		<spring:message code="oncologypoc.Scheduler.scheduledPatients.title"/> 
 		<c:choose>
 		     <c:when test='${model.endDate==model.startDate}'>
@@ -20,7 +21,7 @@
 	        </c:otherwise>
       	</c:choose>
 	</b>
-	<div class="box" style="width:100%">
+	<div class="box">
 		<form action="" method="post">
 			<table>	
 				<tr>
@@ -50,7 +51,7 @@
 				</tr>
 				<c:forEach items="${patients}" var="pat" varStatus="varStatus">
 					<input type="hidden" name="patientId" id="patientId" value="${pat.patientId}"/>
-					<tr onmouseover="this.className='searchHighlight'" onmouseout="this.className=''" onClick="JavaScript:window.location='/openmrs/module/oncologypoc/patientView.form?patientId=${pat.patientId}&phrase=${pat.patientIdentifier}';"
+					<tr onmouseover="this.className='searchHighlight'" onmouseout="this.className='<c:choose><c:when test="${varStatus.index % 2 == 0}">evenRow</c:when><c:otherwise>oddRow</c:otherwise></c:choose>'" onClick="JavaScript:window.location='/openmrs/module/oncologypoc/patientView.form?patientId=${pat.patientId}&phrase=${pat.patientIdentifier}';"
 						class="<c:choose><c:when test="${varStatus.index % 2 == 0}">evenRow</c:when><c:otherwise>oddRow</c:otherwise></c:choose>">
 						<td>${pat.patientIdentifier}</td>
 						<td>${pat.familyName}</td>
