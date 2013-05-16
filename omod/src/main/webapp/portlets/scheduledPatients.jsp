@@ -9,9 +9,9 @@
 
 <c:set var="patients" value="${model.patients}"/>
 <div style="width:100%; margin-left:10px;">
-<h3><spring:message	code="oncologypoc.Scheduler.scheduledPatients.title" /></h3>
+<h3><spring:message	code="oncologypoc.scheduler.scheduledPatients.title" /></h3>
 	<b class="boxHeader">
-		<spring:message code="oncologypoc.Scheduler.scheduledPatients.title"/> 
+		<spring:message code="oncologypoc.scheduler.scheduledPatients.title"/> 
 		<c:choose>
 		     <c:when test='${model.endDate==model.startDate}'>
 		     	[${model.startDate}]
@@ -47,7 +47,7 @@
 					<th align="left"><spring:message code="PersonName.givenName" /></th>
 					<th align="left"><spring:message code="PersonName.middleName" /></th>
 					<th align="center"><spring:message code="Patient.gender" /></th>
-					<th align="left"><spring:message code="oncologypoc.Scheduler.scheduledPatients.returnDate.header" /></th>
+					<th align="left"><spring:message code="oncologypoc.scheduler.scheduledPatients.returnDate.header" /></th>
 				</tr>
 				<c:forEach items="${patients}" var="pat" varStatus="varStatus">
 					<input type="hidden" name="patientId" id="patientId" value="${pat.patientId}"/>

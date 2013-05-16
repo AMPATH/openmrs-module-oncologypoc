@@ -41,6 +41,20 @@
 	box-shadow: 8px 0px 20px 2px #CCCCCC;
 }
 
+.left-nav-div a.current, .left-nav-div a:link.current, .left-nav-div a:visited.current, .left-nav-div a.current:hover {
+	/* Fall back for web browsers that doesn't support RGBa */
+	background: rgb(0, 0, 0) transparent;
+	/* RGBa with 0.19 opacity */
+	background: rgba(0, 0, 0, 0.19);
+	/* For IE 5.5 - 7*/
+	filter: progid : DXImageTransform.Microsoft.gradient ( startColorstr = #99000000, endColorstr = #99000000 );
+	/* For IE 8*/
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+	border-top-left-radius: 10px 10px;
+	border-bottom-left-radius: 10px 10px;
+	text-decoration: none;
+}
+
 .left-nav-div a:hover,.left-nav-div a:focus {
 	/* Fall back for web browsers that doesn't support RGBa */
 	background: rgb(0, 0, 0) transparent;
@@ -50,7 +64,6 @@
 	filter: progid : DXImageTransform.Microsoft.gradient ( startColorstr = #99000000, endColorstr = #99000000 );
 	/* For IE 8*/
 	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
-	color: white;
 	border-top-left-radius: 10px 10px;
 	border-bottom-left-radius: 10px 10px;
 	-webkit-transition: background 0.05s ease;
