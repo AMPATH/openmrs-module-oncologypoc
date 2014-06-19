@@ -49,10 +49,13 @@ public class OncologyPOCFilter implements Filter {
 						((HttpServletResponse) response).sendRedirect(((HttpServletRequest) request).getContextPath() + homePage + "?patientId=" + patientId);
 					if (requestURL.contains("findPatient.htm"))
 						((HttpServletResponse) response).sendRedirect(((HttpServletRequest) request).getContextPath() + "/module/oncologypoc/patientSearch.htm");
+					//if (requestURL.contains("index.htm"))
+						//((HttpServletResponse) response).sendRedirect(((HttpServletRequest) request).getContextPath() + "/module/oncologypoc/patientSearch.htm");
 				} else
 					chain.doFilter(request, response);
 			}
 		}
+
 	}
 
 	public void init(FilterConfig config) throws ServletException {
