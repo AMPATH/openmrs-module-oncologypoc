@@ -38,7 +38,7 @@ public class OncologyPOCFilter implements Filter {
 				boolean interceptThisOne = false;
 
 				for (String role : interceptRoles) {
-					if (autheticatedUser.hasRole(role)){
+					if (autheticatedUser.hasRole(role.trim())){
 						interceptThisOne = true;
 						break;
 					}
