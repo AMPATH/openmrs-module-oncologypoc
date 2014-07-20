@@ -2,9 +2,47 @@
 <openmrs:require privilege="OncologyPoc View Patient Schedules"
 	otherwise="/login.htm"
 	redirect="/module/oncologypoc/portlets/scheduledPatients.form" />
+<openmrs:htmlInclude file="/scripts/jquery/highlight/jquery.highlight-3.js" />
+<openmrs:htmlInclude file="/scripts/jquery/dataTables/js/jquery.dataTables.min.js" />
+<openmrs:htmlInclude file="/scripts/jquery/dataTables/js/jquery.dataTables.filteringDelay.js" />
+<openmrs:htmlInclude file="/scripts/jquery-ui/js/jquery-ui.custom.min.js" />
+<link href="<openmrs:contextPath/>/scripts/jquery-ui/css/<spring:theme code='jqueryui.theme.name' />/jquery-ui.custom.css" type="text/css" rel="stylesheet" />
+<openmrs:htmlInclude file="/scripts/jquery/dataTables/css/dataTables.css" />
+<openmrs:htmlInclude file="/scripts/jquery/dataTables/css/dataTables_jui.css" />
 
-<script src="/openmrs/scripts/calendar/calendar.js"
-	type="text/javascript">
+<script type="text/javascript">
+	var schedulestable;
+	
+	$j(document).ready(function() {
+		schedulestable = $j('#schedulesTable').dataTable( { 
+		 	"aLengthMenu": [[5, 10, 15]],
+			"aoColumns": [  
+							{ "bVisible": true, "bSortable": false},
+							{ "bVisible": true, "bSortable": false},
+							{ "bVisible": true, "bSortable": false},
+							{ "bVisible": true, "bSortable": false},
+							{ "bVisible": true, "bSortable": false},
+							{ "bVisible": true, "bSortable": false}
+			  			 ],
+			"sPaginationType": "full_numbers",
+			"bAutoWidth": false,
+			"bLengthChange": true,
+			"bJQueryUI": true
+		});
+		schedulestable.fnSetFilteringDelay(1000);
+
+		$j("#schedulesTable").delegate('tr','mouseover mouseleave', function(e) {
+		    if (e.type == 'mouseover') {
+			 $j(this).css("background","#F0E68C");
+		    }
+		    else {
+			 $j(this).css("background","");
+		    }
+		});
+	} );
+
+</script>
+<script src="/openmrs/scripts/calendar/calendar.js"	type="text/javascript">
 </script>
 
 <c:set var="patients" value="${model.patients}"/>
@@ -40,18 +78,19 @@
 			<i> &nbsp; There are no patients scheduled for today or specified range</i><br/>
 		</c:if>
 		<c:if test="${fn:length(patients) > 0}">
-			<table width="99%" border="0" cellpadding="2" background="blue" cellspacing="0">
-				<tr>
+			<table cellpadding="5" cellspacing="0" id="schedulesTable" width="100%">
+				<thead>
 					<th align="left"><spring:message code="Patient.identifier" /></th>
 					<th align="left"><spring:message code="PersonName.familyName" /></th>
 					<th align="left"><spring:message code="PersonName.givenName" /></th>
 					<th align="left"><spring:message code="PersonName.middleName" /></th>
 					<th align="center"><spring:message code="Patient.gender" /></th>
 					<th align="left"><spring:message code="oncologypoc.scheduler.scheduledPatients.returnDate.header" /></th>
-				</tr>
+				</thead>
+				
 				<c:forEach items="${patients}" var="pat" varStatus="varStatus">
 					<input type="hidden" name="patientId" id="patientId" value="${pat.patientId}"/>
-					<tr onmouseover="this.className='searchHighlight'" onmouseout="this.className='<c:choose><c:when test="${varStatus.index % 2 == 0}">evenRow</c:when><c:otherwise>oddRow</c:otherwise></c:choose>'" onClick="JavaScript:window.location='/openmrs/module/oncologypoc/patientView.form?patientId=${pat.patientId}&phrase=${pat.patientIdentifier}';"
+					<tr onmouseover="this.className='searchHighlight'" onmouseout="this.className='<c:choose><c:when test="${varStatus.index % 2 == 0}">evenRow</c:when><c:otherwise>oddRow</c:otherwise></c:choose>'" onClick="JavaScript:window.location='${pageContext.request.contextPath}/module/oncologypoc/patientView.form?patientId=${pat.patientId}&phrase=${pat.patientIdentifier}';"
 						class="<c:choose><c:when test="${varStatus.index % 2 == 0}">evenRow</c:when><c:otherwise>oddRow</c:otherwise></c:choose>">
 						<td>${pat.patientIdentifier}</td>
 						<td>${pat.familyName}</td>

@@ -1,7 +1,8 @@
 <%@ include file="/WEB-INF/template/include.jsp" %>
 
-<openmrs:require privilege="View Patients" otherwise="/login.htm" redirect="/module/oncologypoc/patientView.form" />
-
+<openmrs:require privilege="View Patients" otherwise="/login.htm" 
+redirect="/module/oncologypoc/patientView.htm" />
+																			
 <spring:message var="pageTitle" code="patientDashboard.title" scope="page"/>
 
 <%@ include file="/WEB-INF/template/header.jsp" %>
