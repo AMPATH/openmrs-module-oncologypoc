@@ -32,12 +32,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Controller for role-based home page
- */
 public class OncologyPOCHomePagePortletController extends PortletController {
 
-    public static final String DEFAULT_HOME = "/index";
+    public static final String DEFAULT_HOME = "module/oncologypoc/defaultHomePage.htm";
 
     /**
      * @see org.openmrs.web.controller.PortletController#populateModel(javax.servlet.http.HttpServletRequest, java.util.Map)
@@ -78,10 +75,12 @@ public class OncologyPOCHomePagePortletController extends PortletController {
             if (view != null)
                 return new ModelAndView(view, model);
 
+            return new ModelAndView(generateHomepage(request, null,DEFAULT_HOME), model);
+
         }catch (Exception e) {
             log.error("Error displaying oncology POC home page", e);
         }
-        return new ModelAndView(DEFAULT_HOME, model);
+        return null;
     }
 
     /** adopted from role based login module */
