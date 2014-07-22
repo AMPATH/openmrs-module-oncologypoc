@@ -5,7 +5,7 @@
 	<!-- Oncology Point of Care Properties -->
 	<id>oncologypoc</id>
 	<name>Oncology Point of Care</name>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<package>org.openmrs.module.oncologypoc</package>
 	<author>MindFlow</author>
 	<description>
@@ -20,6 +20,11 @@
 	
 
 	<!-- Extensions -->
+    <extension>
+        <point>org.openmrs.navigation.homepage</point>
+        <class>org.openmrs.module.oncologypoc.extension.html.OncologyPOCHomePageExt</class>
+    </extension>
+
 	<extension>
 		<point>org.openmrs.admin.list</point>
 		<class>org.openmrs.module.oncologypoc.extension.html.AdminList</class>

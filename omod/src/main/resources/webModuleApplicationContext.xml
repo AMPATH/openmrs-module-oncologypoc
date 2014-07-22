@@ -32,14 +32,15 @@
 		</property>
     	<property name="mappings">
             <props>
+				<prop key="**/oncologyPOCHomePage.portlet">oncologyPOCHomePagePortletController</prop>
 				<prop key="**/patientAbstract.portlet">patientAbstractPortletController</prop>
 				<prop key="**/scheduledPatients.portlet">scheduledPatientsPortletController</prop>
-				<prop key="**/clinicianAlerts.portlet">clinicianAlertsPortletController</prop>
 				<prop key="**/clinicianAlerts.portlet">clinicianAlertsPortletController</prop>
 	    	</props>
 	    	
 		</property>
     </bean>
+	<bean id="oncologyPOCHomePagePortletController" class="org.openmrs.module.oncologypoc.web.controller.OncologyPOCHomePagePortletController"/>
 	<bean id="patientAbstractPortletController" class="org.openmrs.module.oncologypoc.web.controller.PatientAbstractPortletController"/>
 	<bean id="scheduledPatientsPortletController" class="org.openmrs.module.oncologypoc.web.controller.ScheduledPatientsPortletController"/>
 	<bean id="clinicianAlertsPortletController" class="org.openmrs.module.oncologypoc.web.controller.ClinicianAlertsPortletController"/>

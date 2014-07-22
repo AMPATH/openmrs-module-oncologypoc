@@ -1,6 +1,8 @@
 syntax: regexp
 ^\.settings$
 syntax: regexp
+^\.idea$
+syntax: regexp
 ^omod/\.settings$
 syntax: regexp
 ^api/\.settings$
