@@ -49,14 +49,14 @@
 	<!-- Require Global Properties -->
 	<globalProperty>
 		<property>oncologypoc.interceptRoles</property>
-		<defaultValue>ONCOLOGY CLINICIAN, ONCOLOGY NURSE</defaultValue>
+		<defaultValue>Oncology Clinician, Oncology Nurse</defaultValue>
 		<description>
 			Comma separated roles to be intercepted by this module
 		</description>
 	</globalProperty>
 	<globalProperty>
 		<property>oncologypoc.encounterType</property>
-		<defaultValue>ONCOLOGYINITIAL, ONCOLOGYRETURN</defaultValue>
+		<defaultValue>Oncology Initial,Oncology Return</defaultValue>
 		<description>
 			Comma separated encounter types to filter forms by encounter type
 		</description>
